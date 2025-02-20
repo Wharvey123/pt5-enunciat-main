@@ -17,6 +17,7 @@ public class TodolistController {
     public TodolistController(GestorTasques gestor) {
         this.gestor = gestor;
     }
+
     @RequestMapping(value = { "/", "/tasques" }, method = RequestMethod.GET)
     public String llistarTasques(@RequestParam(value = "filtreDescripcio", required = false) String filtreDescripcio,
             @RequestParam(value = "filtreComplecio", required = false) Boolean filtreComplecio,
@@ -25,6 +26,7 @@ public class TodolistController {
         if (filtreDescripcio != null && !filtreDescripcio.isEmpty()) {
             tasques = gestor.llistarTasquesPerDescripcio(filtreDescripcio);
         } else if (filtreComplecio != null) {
+            // RF5: Filtrar tasques per compleció
             tasques = gestor.llistarTasquesPerComplecio(filtreComplecio);
         } else {
             tasques = gestor.llistarTasques();

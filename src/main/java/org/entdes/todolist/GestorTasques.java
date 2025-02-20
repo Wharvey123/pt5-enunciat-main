@@ -21,7 +21,6 @@ public class GestorTasques {
         this.emailService = null;
     }
 
-    
     @Autowired
     public GestorTasques(IEmailService emailService, @Value("${spring.mail.recipient}") String destinatari) {
         this.emailService = emailService;
@@ -81,7 +80,9 @@ public class GestorTasques {
         Tasca tascaModificada = null;
         for (Tasca tasca : llista) {
             if (tasca.getId() == id) {
+                // RF9: Assignar data actual en marcar com completada
                 tasca.setCompletada(true);
+                tasca.setDataFiReal(LocalDate.now()); 
                 tascaModificada = tasca;
                 break;
             }
@@ -150,11 +151,12 @@ public class GestorTasques {
         }
         return tasquesFiltrades;
     }
-
+    
+    // RF5: Corregir filtre per compleció
     public List<Tasca> llistarTasquesPerComplecio(boolean filtreCompletada) {
         List<Tasca> tasquesFiltrades = new ArrayList<>();
         for (Tasca tasca : llistarTasques()) {
-            if (tasca.isCompletada() && filtreCompletada) {
+            if (tasca.isCompletada() == filtreCompletada) { // Comparació directa
                 tasquesFiltrades.add(tasca);
             }
         }
